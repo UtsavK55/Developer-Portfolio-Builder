@@ -7,7 +7,49 @@
     <link rel="stylesheet" href="src/styles/styles.css">
 </head>
 <body>
-   
-    <script src="dist/scripts/app.js"></script>
+    <div class="form-container">
+        <h1>Developer Info</h1>
+        <form id="projectForm" class="project-form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" class="input-field" pattern="[A-Za-z\s]+" title="Please enter only alphabets." required >
+            </div>
+    
+            <div class="form-group">
+                <label for="age">Age(in years):</label>
+                <input id="age" type="number" class="input-field" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="isEmployed">Employed:</label>
+                <select id="isEmployed" class="input-field" required>
+                    <option value = "">Select employment</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="skills">Skills:</label>
+                <input type="text" id="skills" class="input-field" placeholder="e.g. HTML, CSS, JavaScript" pattern="[A-Za-z0-9,]+" title="Please enter only alphanumeric characters." required>
+                <p>List your skills separated by comma (,)</p>
+            </div>
+    
+            <div class="form-group">
+                <label for="experience">Experience (in years):</label>
+                <input id="experience" type="number" class="input-field"  required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" class="input-field"  title="Please enter a valid email address" required>
+            </div>
+    
+            <div class="form-group">
+                <button type="submit" class="submit-button">Submit</button>
+            </div>
+        </form>
+
+    </div>
+    <script type="module" src="dist/scripts/app.js"></script>
 </body>
 </html>
