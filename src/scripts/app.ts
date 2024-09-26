@@ -1,5 +1,4 @@
 import { addDeveloper } from "./developer.js";
-import { Developer, Project } from "./interface/interface.js";
 
 const projectForm = document.getElementById('projectForm') as HTMLFormElement;
 export const developers : Developer[] =[];

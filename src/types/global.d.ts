@@ -1,4 +1,4 @@
-export interface Developer{
+ interface Developer{
     developerName: string;
     age: number;
     isEmployed: boolean;
@@ -8,7 +8,7 @@ export interface Developer{
     email: string;
 }
 
-export interface Project{
+interface Project{
     projectName: string;
     techStacks: string[];
     isCompleted: boolean;
