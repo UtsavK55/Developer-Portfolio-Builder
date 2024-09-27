@@ -43,7 +43,6 @@ export const addDeveloper = (
   developer.experience = parseInt(devExperience.value);
   developer.email = devEmail.value;
   developers.push({ ...developer });
-  console.log(developers);
   resetForm(developer);
 };
 
@@ -87,18 +86,18 @@ export const updateSkill = (
   newSkill: string
 ) => {
   const { skills } = developer;
-  const oldIndex = skills?.indexOf(oldSkill);
-  const newIndex = skills?.indexOf(newSkill);
-  if (oldIndex === -1) {
+  const oldSkillIndex = skills?.indexOf(oldSkill);
+  const newSkillIndex = skills?.indexOf(newSkill);
+  if (oldSkillIndex === -1) {
     alert(`${oldSkill} does not exist.`);
     return;
   }
-  
-  if (newIndex === -1) {
+
+  if (newSkillIndex === -1) {
     alert(`${newSkill} is already present.`);
     return;
   }
-  skills[oldIndex] = newSkill;
+  skills[oldSkillIndex] = newSkill;
 };
 
 // Condition for removing a Developer
@@ -110,16 +109,13 @@ export const removeDeveloperByCondition = (
   developers: Developers,
   conditionForRemoving: (developer: Developer) => boolean
 ) => {
-  const devToBeRemoved = developers.filter(conditionForRemoving);
-  devToBeRemoved.forEach((item) =>
-    developers.splice(developers.indexOf(item), 1)
-  );
+  return developers.filter((developer) => !conditionForRemoving(developer));
 };
 
 // Sort Developer by Employment and Age
 export const sortDeveloperByEmploymentAndAge = (developers: Developers) => {
-  console.log(
-    developers.sort((a, b) => {
+
+  return  developers.sort((a, b) => {
       const statusOrder = {
         true: 1,
         false: 2,
@@ -132,7 +128,7 @@ export const sortDeveloperByEmploymentAndAge = (developers: Developers) => {
 
       return a.age - b.age;
     })
-  );
+  
 };
 
 // list Skills
@@ -149,14 +145,14 @@ export const findDevelopersBySkill = (
   developers: Developers,
   skill: string
 ) => {
-  const filterdArrr = developers.filter(
+  const filteredArr = developers.filter(
     (item) => item.skills.indexOf(skill) !== -1
   );
-  if (filterdArrr.length === 0) {
+  if (filteredArr.length === 0) {
     alert("No developer found");
     return;
   }
-  console.log(filterdArrr);
+   return filteredArr;
 };
 
 // Update Developer
@@ -166,14 +162,13 @@ export const updateDeveloper = (
 ) => {
   for (const key in updates) {
     if (updates.hasOwnProperty(key) && key in developer) {
-      developer[key] = updates[key] as any;
+      developer[key] = updates[key] as Developer[typeof key];
     }
   }
   console.log(developer);
 };
 
 // Clone developer
-
 export const cloneDeveloper = (developer: Developer) => {
   const deepClone = structuredClone(developer);
   return deepClone;
