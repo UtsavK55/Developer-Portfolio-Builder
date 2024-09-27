@@ -1,55 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Developer Portfolio Builder</title>
-    <link rel="stylesheet" href="src/styles/styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="src/styles/styles.css" />
+  </head>
+  <body>
     <div class="form-container">
-        <h1>Developer Info</h1>
-        <form id="projectForm" class="project-form">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" class="input-field" pattern="[A-Za-z\s]+" title="Please enter only alphabets." required >
-            </div>
-    
-            <div class="form-group">
-                <label for="age">Age(in years):</label>
-                <input id="age" type="number" class="input-field" required>
-            </div>
-    
-            <div class="form-group">
-                <label for="isEmployed">Employed:</label>
-                <select id="isEmployed" class="input-field" required>
-                    <option value = "">Select employment</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-    
-            <div class="form-group">
-                <label for="skills">Skills:</label>
-                <input type="text" id="skills" class="input-field" placeholder="e.g. HTML, CSS, JavaScript" pattern="[A-Za-z0-9,]+" title="Please enter only alphanumeric characters." required>
-                <p>List your skills separated by comma (,)</p>
-            </div>
-    
-            <div class="form-group">
-                <label for="experience">Experience (in years):</label>
-                <input id="experience" type="number" class="input-field"  required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="text" id="email" class="input-field"  title="Please enter a valid email address" required>
-            </div>
-    
-            <div class="form-group">
-                <button type="submit" class="submit-button">Submit</button>
-            </div>
-        </form>
+      <h1>Developer Info</h1>
+      <form id="developerForm" class="project-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            class="input-field"
+            pattern="[A-Za-z\s]+"
+            title="Please enter only alphabets."
+            required
+          />
+        </div>
 
+        <div class="form-group">
+          <label for="age">Age(in years):</label>
+          <input id="age" type="number" class="input-field" required />
+        </div>
+
+        <div class="form-group">
+          <label for="isEmployed">Employed:</label>
+          <select id="isEmployed" class="input-field" required>
+            <option value="">Select employment</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="skills">Skills:</label>
+          <input
+            type="text"
+            id="skills"
+            class="input-field"
+            placeholder="e.g. HTML, CSS, JavaScript"
+            pattern="[A-Za-z0-9,]+"
+            title="Please enter only alphanumeric characters."
+            required
+          />
+          <p>List your skills separated by comma (,)</p>
+        </div>
+
+        <div class="form-group">
+          <label for="experience">Experience (in years):</label>
+          <input id="experience" type="number" class="input-field" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+            type="text"
+            id="email"
+            class="input-field"
+            title="Please enter a valid email address"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="submit-button">Submit</button>
+        </div>
+      </form>
+    </div>
+    <br />
+    <div class="form-container">
+      <form id="projectForm" class="project-form">
+        <h1>Project Info</h1>
+        <div class="form-group">
+          <label for="projectName">Project Name:</label>
+          <input
+            type="text"
+            id="projectName"
+            class="input-field"
+            pattern="[A-Za-z\s]+"
+            title="Please enter only alphabets."
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="techStack">Tech Stack:</label>
+          <input
+            type="text"
+            id="techStack"
+            class="input-field"
+            placeholder="e.g. React, Node.js"
+            required
+          />
+          <p>List your technologies separated by comma (,)</p>
+        </div>
+        <div class="form-group">
+          <label for="isCompleted">Project Completed:</label>
+          <select id="isCompleted" class="input-field">
+            <option value="">Select Project Completetion Status</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="submit-button">Submit</button>
+        </div>
+      </form>
     </div>
     <script type="module" src="dist/scripts/app.js"></script>
-</body>
+  </body>
 </html>

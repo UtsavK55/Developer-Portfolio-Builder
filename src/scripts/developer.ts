@@ -1,4 +1,4 @@
-import { emailPattern } from "./constants/constants.js";
+import { boolValuesforSorting, emailPattern } from "./constants/constants.js";
 
 const devName = document.getElementById("name") as HTMLInputElement;
 const devAge = document.getElementById("age") as HTMLInputElement;
@@ -9,7 +9,7 @@ const devSkills = document.getElementById("skills") as HTMLInputElement;
 const devExperience = document.getElementById("experience") as HTMLInputElement;
 const devEmail = document.getElementById("email") as HTMLInputElement;
 
-// Add Developer on submitting
+
 export const addDeveloper = (
   event: Event,
   developers: Developers,
@@ -42,17 +42,18 @@ export const addDeveloper = (
   addSkill(developer.skills);
   developer.experience = parseInt(devExperience.value);
   developer.email = devEmail.value;
+
   developers.push({ ...developer });
   resetForm(developer);
 };
 
-//Add Skill
+
 export const addSkill = (skills: string[]) => {
   const currentSkill = devSkills.value.split(",");
   currentSkill.map((skill) => skills.push(skill.trim()));
 };
 
-// Reset Form
+
 const resetForm = (developer: Developer) => {
   devName.value = "";
   devAge.value = "";
@@ -68,7 +69,7 @@ const resetForm = (developer: Developer) => {
   developer.email = "";
 };
 
-//Add Property of developer object
+
 export const addProperty = <T>(developer: Developer, additionalProps?: T) => {
   if (additionalProps) {
     Object.assign(developer, { additionalProperties: additionalProps });
@@ -79,7 +80,7 @@ export const addProperty = <T>(developer: Developer, additionalProps?: T) => {
   };
 };
 
-// Update Developer's Skill
+
 export const updateSkill = (
   developer: Developer,
   oldSkill: string,
@@ -101,8 +102,7 @@ export const updateSkill = (
 };
 
 // Condition for removing a Developer
-export const conditionForRemoving = (developer: Developer) =>
-  developer.age < 18;
+export const conditionForRemoving = (developer: Developer) =>developer.age < 18;
 
 // Remove Developer By Condition
 export const removeDeveloperByCondition = (
@@ -112,64 +112,60 @@ export const removeDeveloperByCondition = (
   return developers.filter((developer) => !conditionForRemoving(developer));
 };
 
-// Sort Developer by Employment and Age
+
 export const sortDeveloperByEmploymentAndAge = (developers: Developers) => {
+  return developers.sort((firstDev, secondDev) => {
+    const statusComparison =
+      boolValuesforSorting[`${firstDev.isEmployed}`] - boolValuesforSorting[`${secondDev.isEmployed}`];
+    if (statusComparison !== 0) {
+      return statusComparison;
+    }
 
-  return  developers.sort((a, b) => {
-      const statusOrder = {
-        true: 1,
-        false: 2,
-      };
-      const statusComparison =
-        statusOrder[`${a.isEmployed}`] - statusOrder[`${b.isEmployed}`];
-      if (statusComparison !== 0) {
-        return statusComparison;
-      }
-
-      return a.age - b.age;
-    })
-  
+    return firstDev.age - secondDev.age;
+  });
 };
 
-// list Skills
-export const listSkills = (developers: Developers, developer: Developer) => {
-  if (developer.skills.length === 0) {
+
+export const listSkills = ( developer: Developer) => {
+  const { skills } = developer;
+  if (!skills.length) {
     alert("No skills exist");
     return;
   }
-  developer?.skills.forEach((skill) => console.log(skill));
+  return skills;
 };
 
-//find developers by skills
+
 export const findDevelopersBySkill = (
   developers: Developers,
   skill: string
 ) => {
   const filteredArr = developers.filter(
-    (item) => item.skills.indexOf(skill) !== -1
+    ({ skills }) => skills.indexOf(skill) !== -1
   );
-  if (filteredArr.length === 0) {
+  if (!filteredArr.length) {
     alert("No developer found");
     return;
   }
-   return filteredArr;
+  return filteredArr;
 };
 
-// Update Developer
+
 export const updateDeveloper = (
   developer: Developer,
   updates: Partial<Developer>
 ) => {
   for (const key in updates) {
-    if (updates.hasOwnProperty(key) && key in developer) {
+    if ( key in developer) {
       developer[key] = updates[key] as Developer[typeof key];
     }
   }
-  console.log(developer);
 };
 
-// Clone developer
+
 export const cloneDeveloper = (developer: Developer) => {
   const deepClone = structuredClone(developer);
   return deepClone;
 };
+
+

@@ -12,7 +12,7 @@ interface Developer<T = {}>{
 
 interface Project{
     projectName: string;
-    techStacks: string[];
+    techStack: string[];
     isCompleted: boolean;
 }
 
