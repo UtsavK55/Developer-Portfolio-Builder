@@ -1,7 +1,7 @@
 import { addDeveloper } from "./developer.js";
 
 const projectForm = document.getElementById('projectForm') as HTMLFormElement;
-export const developers : Developer[] =[];
+export const developers : Developers=[];
 export const projects : Project[] = [];
 
 const developer : Developer ={
