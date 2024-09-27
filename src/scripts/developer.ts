@@ -93,6 +93,7 @@ export const updateSkill = (
     alert(`${oldSkill} does not exist.`);
     return;
   }
+  
   if (newIndex === -1) {
     alert(`${newSkill} is already present.`);
     return;
