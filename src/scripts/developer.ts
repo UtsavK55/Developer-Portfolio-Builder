@@ -114,30 +114,29 @@ export const removeDeveloperByCondition = (
 
 // Sort Developer by Employment and Age
 export const sortDeveloperByEmploymentAndAge = (developers: Developers) => {
+  return developers.sort((a, b) => {
+    const statusOrder = {
+      true: 1,
+      false: 2,
+    };
+    const statusComparison =
+      statusOrder[`${a.isEmployed}`] - statusOrder[`${b.isEmployed}`];
+    if (statusComparison !== 0) {
+      return statusComparison;
+    }
 
-  return  developers.sort((a, b) => {
-      const statusOrder = {
-        true: 1,
-        false: 2,
-      };
-      const statusComparison =
-        statusOrder[`${a.isEmployed}`] - statusOrder[`${b.isEmployed}`];
-      if (statusComparison !== 0) {
-        return statusComparison;
-      }
-
-      return a.age - b.age;
-    })
-  
+    return a.age - b.age;
+  });
 };
 
 // list Skills
 export const listSkills = (developers: Developers, developer: Developer) => {
-  if (developer.skills.length === 0) {
+  const { skills } = developer;
+  if (skills.length === 0) {
     alert("No skills exist");
     return;
   }
-  developer?.skills.forEach((skill) => console.log(skill));
+  return skills;
 };
 
 //find developers by skills
@@ -146,13 +145,13 @@ export const findDevelopersBySkill = (
   skill: string
 ) => {
   const filteredArr = developers.filter(
-    (item) => item.skills.indexOf(skill) !== -1
+    ({ skills }) => skills.indexOf(skill) !== -1
   );
   if (filteredArr.length === 0) {
     alert("No developer found");
     return;
   }
-   return filteredArr;
+  return filteredArr;
 };
 
 // Update Developer
@@ -165,7 +164,6 @@ export const updateDeveloper = (
       developer[key] = updates[key] as Developer[typeof key];
     }
   }
-  console.log(developer);
 };
 
 // Clone developer
