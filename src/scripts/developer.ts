@@ -82,27 +82,22 @@ export const addProperty = <T>(developer: Developer, additionalProps?: T) => {
 
 // Update Developer's Skill
 export const updateSkill = (
-  developers: Developers,
   developer: Developer,
   oldSkill: string,
   newSkill: string
 ) => {
-  const currentDeveloper = developers?.find(
-    ({ email }) => email === developer.email
-  );
-
-  if (currentDeveloper) {
-    const index = currentDeveloper?.skills?.indexOf(oldSkill);
-
-    if (index > -1) {
-      currentDeveloper.skills.splice(index, 1, newSkill);
-      developers.splice(
-        developers.findIndex((item) => item === developer),
-        1,
-        currentDeveloper
-      );
-    }
+  const { skills } = developer;
+  const oldIndex = skills?.indexOf(oldSkill);
+  const newIndex = skills?.indexOf(newSkill);
+  if (oldIndex === -1) {
+    alert(`${oldSkill} does not exist.`);
+    return;
   }
+  if (newIndex === -1) {
+    alert(`${newSkill} is already present.`);
+    return;
+  }
+  skills[oldIndex] = newSkill;
 };
 
 // Condition for removing a Developer
@@ -141,31 +136,44 @@ export const sortDeveloperByEmploymentAndAge = (developers: Developers) => {
 
 // list Skills
 export const listSkills = (developers: Developers, developer: Developer) => {
-  const currentDeveloper = developers?.find(
-    ({ email }) => email === developer.email
-  );
-  currentDeveloper?.skills.forEach((skill) => console.log(skill));
+  if (developer.skills.length === 0) {
+    alert("No skills exist");
+    return;
+  }
+  developer?.skills.forEach((skill) => console.log(skill));
 };
 
 //find developers by skills
-export const findDevelopersBySkill = (developers: Developers, skill: string) => {
-   const filterdArrr= developers.filter(item=> item.skills.indexOf(skill) !== -1)
-    console.log(filterdArrr);
+export const findDevelopersBySkill = (
+  developers: Developers,
+  skill: string
+) => {
+  const filterdArrr = developers.filter(
+    (item) => item.skills.indexOf(skill) !== -1
+  );
+  if (filterdArrr.length === 0) {
+    alert("No developer found");
+    return;
+  }
+  console.log(filterdArrr);
 };
 
-// Update Developer 
-  export const updateDeveloper = (developer: Developer, updates: Partial<Developer>) => {
-    for (const key in updates) {
-        if (updates.hasOwnProperty(key) && key in developer) {
-            developer[key] = updates[key] as any; 
-        }
+// Update Developer
+export const updateDeveloper = (
+  developer: Developer,
+  updates: Partial<Developer>
+) => {
+  for (const key in updates) {
+    if (updates.hasOwnProperty(key) && key in developer) {
+      developer[key] = updates[key] as any;
     }
-    console.log(developer);
+  }
+  console.log(developer);
 };
 
 // Clone developer
 
-export const cloneDeveloper = (developer:Developer)=>{
+export const cloneDeveloper = (developer: Developer) => {
   const deepClone = structuredClone(developer);
   return deepClone;
-}
+};
