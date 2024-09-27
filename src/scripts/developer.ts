@@ -12,7 +12,7 @@ const devEmail = document.getElementById("email") as HTMLInputElement;
 // Add Developer on submitting
 export const addDeveloper = (
   event: Event,
-  developers: Developer[],
+  developers: Developers,
   developer: Developer
 ) => {
   event.preventDefault();
@@ -43,7 +43,6 @@ export const addDeveloper = (
   developer.experience = parseInt(devExperience.value);
   developer.email = devEmail.value;
   developers.push({ ...developer });
-  console.log(developer);
   resetForm(developer);
 };
 
@@ -67,4 +66,110 @@ const resetForm = (developer: Developer) => {
   developer.skills = [];
   developer.experience = 0;
   developer.email = "";
+};
+
+//Add Property of developer object
+export const addProperty = <T>(developer: Developer, additionalProps?: T) => {
+  if (additionalProps) {
+    Object.assign(developer, { additionalProperties: additionalProps });
+  }
+  return {
+    ...developer,
+    additionalProperties: additionalProps,
+  };
+};
+
+// Update Developer's Skill
+export const updateSkill = (
+  developer: Developer,
+  oldSkill: string,
+  newSkill: string
+) => {
+  const { skills } = developer;
+  const oldSkillIndex = skills?.indexOf(oldSkill);
+  const newSkillIndex = skills?.indexOf(newSkill);
+  if (oldSkillIndex === -1) {
+    alert(`${oldSkill} does not exist.`);
+    return;
+  }
+
+  if (newSkillIndex === -1) {
+    alert(`${newSkill} is already present.`);
+    return;
+  }
+  skills[oldSkillIndex] = newSkill;
+};
+
+// Condition for removing a Developer
+export const conditionForRemoving = (developer: Developer) =>
+  developer.age < 18;
+
+// Remove Developer By Condition
+export const removeDeveloperByCondition = (
+  developers: Developers,
+  conditionForRemoving: (developer: Developer) => boolean
+) => {
+  return developers.filter((developer) => !conditionForRemoving(developer));
+};
+
+// Sort Developer by Employment and Age
+export const sortDeveloperByEmploymentAndAge = (developers: Developers) => {
+
+  return  developers.sort((a, b) => {
+      const statusOrder = {
+        true: 1,
+        false: 2,
+      };
+      const statusComparison =
+        statusOrder[`${a.isEmployed}`] - statusOrder[`${b.isEmployed}`];
+      if (statusComparison !== 0) {
+        return statusComparison;
+      }
+
+      return a.age - b.age;
+    })
+  
+};
+
+// list Skills
+export const listSkills = (developers: Developers, developer: Developer) => {
+  if (developer.skills.length === 0) {
+    alert("No skills exist");
+    return;
+  }
+  developer?.skills.forEach((skill) => console.log(skill));
+};
+
+//find developers by skills
+export const findDevelopersBySkill = (
+  developers: Developers,
+  skill: string
+) => {
+  const filteredArr = developers.filter(
+    (item) => item.skills.indexOf(skill) !== -1
+  );
+  if (filteredArr.length === 0) {
+    alert("No developer found");
+    return;
+  }
+   return filteredArr;
+};
+
+// Update Developer
+export const updateDeveloper = (
+  developer: Developer,
+  updates: Partial<Developer>
+) => {
+  for (const key in updates) {
+    if (updates.hasOwnProperty(key) && key in developer) {
+      developer[key] = updates[key] as Developer[typeof key];
+    }
+  }
+  console.log(developer);
+};
+
+// Clone developer
+export const cloneDeveloper = (developer: Developer) => {
+  const deepClone = structuredClone(developer);
+  return deepClone;
 };

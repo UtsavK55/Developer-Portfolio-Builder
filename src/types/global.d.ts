@@ -1,4 +1,5 @@
- interface Developer{
+
+interface Developer<T = {}>{
     developerName: string;
     age: number;
     isEmployed: boolean;
@@ -6,6 +7,7 @@
     projects: Project[];
     experience: number;
     email: string;
+    [key: string]: T;
 }
 
 interface Project{
@@ -13,3 +15,5 @@ interface Project{
     techStacks: string[];
     isCompleted: boolean;
 }
+
+type Developers=Developer[];
