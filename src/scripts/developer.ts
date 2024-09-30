@@ -9,7 +9,6 @@ const devSkills = document.getElementById("skills") as HTMLInputElement;
 const devExperience = document.getElementById("experience") as HTMLInputElement;
 const devEmail = document.getElementById("email") as HTMLInputElement;
 
-
 export const addDeveloper = (
   event: Event,
   developers: Developers,
@@ -42,17 +41,14 @@ export const addDeveloper = (
   addSkill(developer.skills);
   developer.experience = parseInt(devExperience.value);
   developer.email = devEmail.value;
-
   developers.push({ ...developer });
   resetForm(developer);
 };
 
-
 export const addSkill = (skills: string[]) => {
   const currentSkill = devSkills.value.split(",");
-  currentSkill.map((skill) => skills.push(skill.trim()));
+  currentSkill.map((skill) => skills.push(skill.trim().toLowerCase()));
 };
-
 
 const resetForm = (developer: Developer) => {
   devName.value = "";
@@ -69,7 +65,6 @@ const resetForm = (developer: Developer) => {
   developer.email = "";
 };
 
-
 export const addProperty = <T>(developer: Developer, additionalProps?: T) => {
   if (additionalProps) {
     Object.assign(developer, { additionalProperties: additionalProps });
@@ -80,15 +75,14 @@ export const addProperty = <T>(developer: Developer, additionalProps?: T) => {
   };
 };
 
-
 export const updateSkill = (
   developer: Developer,
   oldSkill: string,
   newSkill: string
 ) => {
   const { skills } = developer;
-  const oldSkillIndex = skills?.indexOf(oldSkill);
-  const newSkillIndex = skills?.indexOf(newSkill);
+  const oldSkillIndex = skills?.indexOf(oldSkill.toLowerCase());
+  const newSkillIndex = skills?.indexOf(newSkill.toLowerCase());
   if (oldSkillIndex === -1) {
     alert(`${oldSkill} does not exist.`);
     return;
@@ -102,7 +96,8 @@ export const updateSkill = (
 };
 
 // Condition for removing a Developer
-export const conditionForRemoving = (developer: Developer) =>developer.age < 18;
+export const conditionForRemoving = (developer: Developer) =>
+  developer.age < 18;
 
 // Remove Developer By Condition
 export const removeDeveloperByCondition = (
@@ -112,11 +107,11 @@ export const removeDeveloperByCondition = (
   return developers.filter((developer) => !conditionForRemoving(developer));
 };
 
-
 export const sortDeveloperByEmploymentAndAge = (developers: Developers) => {
   return developers.sort((firstDev, secondDev) => {
     const statusComparison =
-      boolValuesforSorting[`${firstDev.isEmployed}`] - boolValuesforSorting[`${secondDev.isEmployed}`];
+      boolValuesforSorting[`${firstDev.isEmployed}`] -
+      boolValuesforSorting[`${secondDev.isEmployed}`];
     if (statusComparison !== 0) {
       return statusComparison;
     }
@@ -125,8 +120,7 @@ export const sortDeveloperByEmploymentAndAge = (developers: Developers) => {
   });
 };
 
-
-export const listSkills = ( developer: Developer) => {
+export const listSkills = (developer: Developer) => {
   const { skills } = developer;
   if (!skills.length) {
     alert("No skills exist");
@@ -135,13 +129,12 @@ export const listSkills = ( developer: Developer) => {
   return skills;
 };
 
-
 export const findDevelopersBySkill = (
   developers: Developers,
   skill: string
 ) => {
   const filteredArr = developers.filter(
-    ({ skills }) => skills.indexOf(skill) !== -1
+    ({ skills }) => skills.indexOf(skill.toLowerCase()) !== -1
   );
   if (!filteredArr.length) {
     alert("No developer found");
@@ -150,22 +143,37 @@ export const findDevelopersBySkill = (
   return filteredArr;
 };
 
-
 export const updateDeveloper = (
   developer: Developer,
   updates: Partial<Developer>
 ) => {
   for (const key in updates) {
-    if ( key in developer) {
+    if (key in developer) {
       developer[key] = updates[key] as Developer[typeof key];
     }
   }
 };
-
 
 export const cloneDeveloper = (developer: Developer) => {
   const deepClone = structuredClone(developer);
   return deepClone;
 };
 
+// Approach 2
+export const cloneDevByRecursion = <T>(developer: T): T => {
+  if (developer === null || typeof developer !== "object") {
+    return developer;
+  }
 
+  const clonedObj: T = {} as T;
+
+  if (Array.isArray(developer)) {
+    return developer.map((item) => cloneDevByRecursion(item)) as T;
+  }
+
+  for (const key in developer) {
+    clonedObj[key] = cloneDevByRecursion(developer[key]);
+  }
+
+  return clonedObj;
+};
